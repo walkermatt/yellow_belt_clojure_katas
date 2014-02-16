@@ -1,9 +1,12 @@
 (ns clojure-katas.fizzbuzz
   (:use [midje.sweet]))
 
-(defn fizzbuzz [n])
+(defn fizzbuzz [n]
+  (let [s (str (when (zero? (mod n 3)) "fizz")
+               (when (zero? (mod n 5)) "buzz"))]
+    (if (empty? s) n s)))
 
-(future-facts "Fizzbuzz returns \"fizz\" when the number is divisible
+(facts "Fizzbuzz returns \"fizz\" when the number is divisible
 by 3, and \"buzz\" when the number is divisible by 5.  If divisible by
 3 AND 5, return \"fizzbuzz\".  Otherwise, return the number."
 
