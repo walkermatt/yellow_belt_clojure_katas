@@ -1,11 +1,19 @@
 (ns clojure-katas.teleprompter
   (:use [midje.sweet]))
 
-(defn translate [input-string dictionary]
-  (loop [s input-string d dictionary]
-    (if-let [[match replacement] (first d)]
-      (recur (clojure.string/replace s match replacement) (rest d))
-      s)))
+; Recursive version which replaces all occurrences of the head then passes the
+; new value of the string together with the tail on each iteration of the loop,
+; returns the string once the list is exhausted
+; (defn translate [input-string dictionary]
+;   (loop [s input-string d dictionary]
+;     (if-let [[match replacement] (first d)]
+;       (recur (clojure.string/replace s match replacement) (rest d))
+;       s)))
+
+; Beautifully simple version using reduce and destructuring to do the same as
+; the loop/recur version without the explicit recursion
+(defn translate [s d]
+  (reduce (fn [a [b c]] (clojure.string/replace a b c)) s d))
 
 (def dict-1 {"hizzle" "house"})
 (def dict-2 {"hizzle" "house"
